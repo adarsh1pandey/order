@@ -8,10 +8,11 @@ import {RFValue} from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    width: wp(100),
   },
   headerView: {
-    height: hp(7),
+    // height: hp(7),
+    paddingTop: hp(2),
     width: wp(100),
     backgroundColor: '#a5c5d2',
     flexDirection: 'row',
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
   },
   headerTextStyle: {
     alignSelf: 'flex-end',
-    fontSize: RFValue(20),
+    fontSize: RFValue(23),
     fontWeight: '600',
     color: '#fff',
     paddingBottom: hp(1),
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   },
   mainView: {
     backgroundColor: '#3c4f59',
-    height: hp(95),
+    // height: hp(94),
   },
   titleMainViewText: {
     fontSize: RFValue(22),
@@ -104,6 +105,10 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: '#a19f95',
+  },
+  footerView: {
+    height: hp(7),
+    backgroundColor: '#3c4f59',
   },
 });
 
