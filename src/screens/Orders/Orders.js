@@ -54,64 +54,61 @@ const Orders = () => {
         <Text style={styles.headerTextStyle}>{COMMON_CONSTS.AT_YOUR} </Text>
         <Text style={styles.headerTextStyle}>{COMMON_CONSTS.SERVICE}</Text>
       </View>
-      <ScrollView>
-        <View style={styles.mainView}>
-          <Text style={styles.titleMainViewText}>
-            {COMMON_CONSTS.ORDER_IN_PROGRESS}
-          </Text>
-          <View style={styles.cardView}>
+
+      <ScrollView style={styles.mainView}>
+        <Text style={styles.titleMainViewText}>
+          {COMMON_CONSTS.ORDER_IN_PROGRESS}
+        </Text>
+        <View style={styles.cardView}>
+          <CustomOrderCardComponent
+            guestRoomLocationView={styles.guestRoomViewStyle}
+            statusView={styles.statusViewStyle}
+            roomView={styles.roomViewStyle}
+            status={COMMON_CONSTS.STATUS}
+            guest={COMMON_CONSTS.GUEST}
+            room={COMMON_CONSTS.ROOM}
+            location={COMMON_CONSTS.LOCATION}
+          />
+          {orderInProgress?.map((value, index) => (
             <CustomOrderCardComponent
-              guestRoomLocationView={styles.guestRoomViewStyle}
-              statusView={styles.statusViewStyle}
-              roomView={styles.roomViewStyle}
-              status={COMMON_CONSTS.STATUS}
-              guest={COMMON_CONSTS.GUEST}
-              room={COMMON_CONSTS.ROOM}
-              location={COMMON_CONSTS.LOCATION}
+              key={index}
+              status={value?.status}
+              guest={value?.guest}
+              room={value?.room}
+              location={value?.location}
+              index={index}
             />
-            {orderInProgress?.map((value, index) => (
-              <CustomOrderCardComponent
-                key={index}
-                status={value?.status}
-                guest={value?.guest}
-                room={value?.room}
-                location={value?.location}
-                index={index}
-              />
-            ))}
-          </View>
-          <Text style={styles.titleMainViewText}>
-            {COMMON_CONSTS.COMPLETED_ORDERS}
-          </Text>
-          <View style={styles.cardView}>
-            {completedOrders?.map((value, index) => (
-              <CustomOrderCardComponent
-                key={index}
-                textStyle={styles.textStyle}
-                statusView={styles.completedOrderStatusView}
-                status={value?.status}
-                guest={value?.guest}
-                room={value?.room}
-                location={value?.location}
-              />
-            ))}
-          </View>
-          <View style={styles.employeeInfoSignOutView}>
-            <Text style={styles.signedInAsStyle}>
-              {COMMON_CONSTS.SIGNED_IN_AS}
-            </Text>
-            <Text style={styles.nameStyle}>{COMMON_CONSTS.MARK_TAPPERT}</Text>
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              onPress={() => console.log('button pressend')}>
-              <Text style={styles.buttonTextStyle}>
-                {COMMON_CONSTS.SIGN_OUT}
-              </Text>
-            </TouchableOpacity>
-            <View style={styles.curveView} />
-          </View>
-          <View style={styles.footerView} />
+          ))}
         </View>
+        <Text style={styles.titleMainViewText}>
+          {COMMON_CONSTS.COMPLETED_ORDERS}
+        </Text>
+        <View style={styles.cardView}>
+          {completedOrders?.map((value, index) => (
+            <CustomOrderCardComponent
+              key={index}
+              textStyle={styles.textStyle}
+              statusView={styles.completedOrderStatusView}
+              status={value?.status}
+              guest={value?.guest}
+              room={value?.room}
+              location={value?.location}
+            />
+          ))}
+        </View>
+        <View style={styles.employeeInfoSignOutView}>
+          <Text style={styles.signedInAsStyle}>
+            {COMMON_CONSTS.SIGNED_IN_AS}
+          </Text>
+          <Text style={styles.nameStyle}>{COMMON_CONSTS.MARK_TAPPERT}</Text>
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            onPress={() => console.log('button pressend')}>
+            <Text style={styles.buttonTextStyle}>{COMMON_CONSTS.SIGN_OUT}</Text>
+          </TouchableOpacity>
+          <View style={styles.curveView} />
+        </View>
+        <View style={styles.footerView} />
       </ScrollView>
     </View>
   );
