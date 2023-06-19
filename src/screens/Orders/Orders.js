@@ -3,6 +3,11 @@ import React from 'react';
 import {COMMON_CONSTS} from '../../shared/constants';
 import styles from './Orders.styles';
 import CustomOrderCardComponent from '../../components/CustomOrderCardComponent/CustomOrderCardComponent';
+import {SvgBell} from '../../Assets/svg';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 
 const orderInProgress = [
   {status: 'NEW', guest: 'MALIK SMITH', room: '215', location: 'MY ROOM'},
@@ -52,6 +57,10 @@ const Orders = () => {
     <View>
       <View style={styles.headerView}>
         <Text style={styles.headerTextStyle}>{COMMON_CONSTS.AT_YOUR} </Text>
+        <SvgBell
+          width={widthPercentageToDP(8)}
+          height={heightPercentageToDP(5.5)}
+        />
         <Text style={styles.headerTextStyle}>{COMMON_CONSTS.SERVICE}</Text>
       </View>
 

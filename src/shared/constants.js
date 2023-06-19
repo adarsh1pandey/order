@@ -10,4 +10,16 @@ export const COMMON_CONSTS = {
   SIGNED_IN_AS: 'Signed in as:',
   MARK_TAPPERT: 'Mark Tappert',
   SIGN_OUT: 'SIGN OUT',
+  SIGN_IN: 'SIGN IN',
+  EMPLOYEE_SIGN_IN: 'Employee sign in',
+  WELCOME_TO_THE_EMPLOYEE_SIGN_IN_SITE: 'Welcome to the employee sign in site.',
+  PLEASE_SIGN_IN_WITH_YOUR_EMPLOYEE_ID: 'Please sign in with your employee ID.',
+  HOTEL: 'Hotel',
+  EMPLOYEE_ID: 'Employee ID',
+  REMEMBER_ME: 'Remember Me?',
+  NEED_HELP: 'Need Help?',
+  CLICK_HERE: 'CLICK HERE',
+  CUSTOMER: 'CUSTOMER',
+
+  PLATFORM: 'PLATFORM',
 };
