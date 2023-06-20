@@ -61,7 +61,7 @@ const Orders = () => {
           width={widthPercentageToDP(8)}
           height={heightPercentageToDP(5.5)}
         />
-        <Text style={styles.headerTextStyle}>{COMMON_CONSTS.SERVICE}</Text>
+        <Text style={styles.headerTextStyle}> {COMMON_CONSTS.SERVICE}</Text>
       </View>
 
       <ScrollView style={styles.mainView}>

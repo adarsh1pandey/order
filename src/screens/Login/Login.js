@@ -1,4 +1,10 @@
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useState} from 'react';
 import styles from './Login.styles';
 import {COMMON_CONSTS} from '../../shared/constants';
@@ -8,9 +14,54 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
+import axios from 'axios';
+import {BlurView} from '@react-native-community/blur';
 
-const Login = () => {
+const Login = ({navigation}) => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [hotel, setHotel] = useState('');
+  const [employeeId, setEmployeeId] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
+
+  const makeRequest = async () => {
+    const url = 'https://api.tapservice.dk/manager/code';
+    const solution = hotel;
+    const code = employeeId;
+    const apiKey = 'rMDZS9QXZc7byh67vVn7SGYAf9Xq4JBU';
+    // const cookie = 'PHPSESSID=1e97c4f234786aefdedc0ed7c01c6648';
+
+    try {
+      setLoading(true);
+      const response = await axios.post(url, null, {
+        params: {solution, code},
+        headers: {
+          APIKEY: apiKey,
+          // Cookie: cookie,
+        },
+      });
+      response?.status === 200 ? navigation.navigate('Orders') : null;
+      console.log(response, 'this is response brother '); // Handle the response data
+    } catch (error) {
+      console.error(error); // Handle errors
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Call the function to make the API request
+
+  const handleHotelTextChange = value => {
+    setHotel(value);
+  };
+  const handleEmployeeIdChange = value => {
+    setEmployeeId(value);
+  };
+  const handleSignInPress = () => {
+    hotel && employeeId
+      ? (makeRequest(), setShowError(false))
+      : setShowError(true);
+  };
   return (
     <View>
       <View style={styles.headerView}>
@@ -45,6 +96,7 @@ const Login = () => {
               <TextInput
                 style={styles.textInputStyle}
                 placeholder={COMMON_CONSTS.HOTEL}
+                onChangeText={value => handleHotelTextChange(value)}
               />
             </View>
             <View style={styles.svgTextInputViewStyle}>
@@ -56,9 +108,15 @@ const Login = () => {
               <TextInput
                 style={styles.textInputStyle}
                 placeholder={COMMON_CONSTS.EMPLOYEE_ID}
+                onChangeText={value => handleEmployeeIdChange(value)}
               />
             </View>
           </View>
+          {showError && (
+            <Text style={styles.errorStyle}>
+              {COMMON_CONSTS.ENTER_ALL_FIELDS}
+            </Text>
+          )}
           <View style={styles.rememberMeCheckBoxViewStyle}>
             <CheckBox
               disabled={false}
@@ -69,7 +127,10 @@ const Login = () => {
               {COMMON_CONSTS.REMEMBER_ME}
             </Text>
           </View>
-          <TouchableOpacity style={styles.buttonStyle}>
+
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            onPress={() => handleSignInPress()}>
             <Text style={styles.buttonTextStyle}>{COMMON_CONSTS.SIGN_IN}</Text>
           </TouchableOpacity>
           <View style={styles.needHelpClickHereStyle}>
@@ -91,6 +152,22 @@ const Login = () => {
           </Text>
         </View>
       </View>
+
+      {loading && (
+        <BlurView
+          style={{
+            flex: 1,
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+          blurType="light"
+          blurAmount={1}
+        />
+      )}
+      {loading && <ActivityIndicator size="large" />}
     </View>
   );
 };

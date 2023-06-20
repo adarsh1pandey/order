@@ -20,6 +20,6 @@ export const COMMON_CONSTS = {
   NEED_HELP: 'Need Help?',
   CLICK_HERE: 'CLICK HERE',
   CUSTOMER: 'CUSTOMER',
-
+  ENTER_ALL_FIELDS: 'Enter all fields',
   PLATFORM: 'PLATFORM',
 };

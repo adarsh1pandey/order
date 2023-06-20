@@ -116,6 +116,10 @@ const styles = StyleSheet.create({
   clickHereTextStyle: {
     borderBottomWidth: 0.5,
   },
+  errorStyle: {
+    marginLeft: wp(12.5),
+    color: '#f00',
+  },
 });
 
 export default styles;
