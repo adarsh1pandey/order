@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {COMMON_CONSTS} from '../../shared/constants';
 import styles from './Orders.styles';
 import CustomOrderCardComponent from '../../components/CustomOrderCardComponent/CustomOrderCardComponent';
@@ -8,6 +8,7 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
+import axios from 'axios';
 
 const orderInProgress = [
   {status: 'NEW', guest: 'MALIK SMITH', room: '215', location: 'MY ROOM'},
@@ -52,7 +53,42 @@ const completedOrders = [
   },
 ];
 
-const Orders = () => {
+const Orders = ({navigation}) => {
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState([]);
+  useEffect(() => {
+    makeRequest();
+  }, []);
+  const makeRequest = async () => {
+    const url = 'https://api.tapservice.dk/query/order';
+    const solution = 'qa';
+    const manager = 1;
+    const archive = 90000;
+    const apiKey = 'rMDZS9QXZc7byh67vVn7SGYAf9Xq4JBU';
+    // const cookie = 'PHPSESSID=1e97c4f234786aefdedc0ed7c01c6648';
+
+    try {
+      setLoading(true);
+      const response = await axios.post(url, null, {
+        params: {solution, manager, archive},
+        headers: {
+          APIKEY: apiKey,
+          // Cookie: cookie,
+        },
+      });
+      response?.status === 200 ? setResult(response?.data) : null;
+
+      console.log(response, 'this is response brother '); // Handle the response data
+    } catch (error) {
+      console.error(error); // Handle errors
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSignOutButtonPress = () => {
+    navigation.popToTop();
+  };
   return (
     <View>
       <View style={styles.headerView}>
@@ -78,7 +114,7 @@ const Orders = () => {
             room={COMMON_CONSTS.ROOM}
             location={COMMON_CONSTS.LOCATION}
           />
-          {orderInProgress?.map((value, index) => (
+          {result?.map((value, index) => (
             <CustomOrderCardComponent
               key={index}
               status={value?.status}
@@ -112,7 +148,7 @@ const Orders = () => {
           <Text style={styles.nameStyle}>{COMMON_CONSTS.MARK_TAPPERT}</Text>
           <TouchableOpacity
             style={styles.buttonStyle}
-            onPress={() => console.log('button pressend')}>
+            onPress={() => handleSignOutButtonPress()}>
             <Text style={styles.buttonTextStyle}>{COMMON_CONSTS.SIGN_OUT}</Text>
           </TouchableOpacity>
           <View style={styles.curveView} />

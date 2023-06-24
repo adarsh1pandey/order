@@ -4,6 +4,8 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import styles from './Login.styles';
@@ -41,6 +43,7 @@ const Login = ({navigation}) => {
         },
       });
       response?.status === 200 ? navigation.navigate('Orders') : null;
+
       console.log(response, 'this is response brother '); // Handle the response data
     } catch (error) {
       console.error(error); // Handle errors
@@ -52,7 +55,7 @@ const Login = ({navigation}) => {
   // Call the function to make the API request
 
   const handleHotelTextChange = value => {
-    setHotel(value);
+    setHotel(value.trim());
   };
   const handleEmployeeIdChange = value => {
     setEmployeeId(value);
@@ -122,6 +125,7 @@ const Login = ({navigation}) => {
               disabled={false}
               value={toggleCheckBox}
               onValueChange={newValue => setToggleCheckBox(newValue)}
+              style={styles.checkBoxStyle}
             />
             <Text style={styles.secondaryTextStyle}>
               {COMMON_CONSTS.REMEMBER_ME}
@@ -154,20 +158,13 @@ const Login = ({navigation}) => {
       </View>
 
       {loading && (
-        <BlurView
-          style={{
-            flex: 1,
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-          }}
-          blurType="light"
-          blurAmount={1}
-        />
+        <BlurView style={styles.blurView} blurType="light" blurAmount={1} />
       )}
-      {loading && <ActivityIndicator size="large" />}
+      {loading && (
+        <View style={styles.loadingView}>
+          <ActivityIndicator size="large" />
+        </View>
+      )}
     </View>
   );
 };

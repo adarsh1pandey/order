@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../screens/Login/Login';
@@ -6,7 +6,7 @@ import Orders from '../screens/Orders/Orders';
 
 const Stack = createNativeStackNavigator();
 
-const AppNavigator = () => {
+const AppNavigator = ({navigation}) => {
   return (
     <NavigationContainer>
       <Stack.Navigator

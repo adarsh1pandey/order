@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
+  heightPercentageToDP,
 } from 'react-native-responsive-screen';
 
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     width: wp(70),
     borderBottomWidth: 1,
     paddingLeft: wp(9),
+    color: '#000',
   },
   textInputView: {
     alignSelf: 'center',
@@ -103,6 +105,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     marginTop: hp(4),
+    color: '#f00',
   },
   needHelpClickHereStyle: {
     flexDirection: 'row',
@@ -115,10 +118,29 @@ const styles = StyleSheet.create({
   },
   clickHereTextStyle: {
     borderBottomWidth: 0.5,
+    color: '#000',
   },
   errorStyle: {
     marginLeft: wp(12.5),
     color: '#f00',
+  },
+  blurView: {
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  loadingView: {
+    height: heightPercentageToDP(100),
+    position: 'absolute',
+    zIndex: 1,
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  checkBoxStyle: {
+    color: '#000',
   },
 });
 
