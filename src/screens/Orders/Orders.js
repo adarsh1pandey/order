@@ -53,15 +53,18 @@ const completedOrders = [
   },
 ];
 
-const Orders = ({navigation}) => {
+const Orders = ({navigation, route}) => {
+  const hotel = route?.params?.hotel;
+  const name = route?.params?.name;
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState([]);
   useEffect(() => {
     makeRequest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const makeRequest = async () => {
     const url = 'https://api.tapservice.dk/query/order';
-    const solution = 'qa';
+    const solution = hotel;
     const manager = 1;
     const archive = 90000;
     const apiKey = 'rMDZS9QXZc7byh67vVn7SGYAf9Xq4JBU';
@@ -84,13 +87,44 @@ const Orders = ({navigation}) => {
     } finally {
       setLoading(false);
     }
+
+    const apiUrl = 'https://api.tapservice.dk/manager/devicetoken/delete';
+    // const formData = objectToFormData(data);
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        apiUrl,
+        {
+          solution: solution,
+          manager: manager,
+          // devicetoken: deviceToken,
+        },
+        {
+          headers: {
+            APIKEY: apiKey,
+          },
+        },
+      );
+      // response?.status === 200
+      //   ? navigation.navigate('Orders', {
+      //       hotel: hotel,
+      //       name: response?.data?.name,
+      //     })
+      //   : setShowApiError(true);
+
+      console.log(response, 'this is response brother '); // Handle the response data
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSignOutButtonPress = () => {
     navigation.popToTop();
   };
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.headerView}>
         <Text style={styles.headerTextStyle}>{COMMON_CONSTS.AT_YOUR} </Text>
         <SvgBell
@@ -117,11 +151,14 @@ const Orders = ({navigation}) => {
           {result?.map((value, index) => (
             <CustomOrderCardComponent
               key={index}
-              status={value?.status}
+              status={COMMON_CONSTS.NEW}
               guest={value?.guest}
               room={value?.room}
               location={value?.location}
               index={index}
+              statusView={
+                value.status === 'red' ? {backgroundColor: '#a9132a'} : null
+              }
             />
           ))}
         </View>
@@ -145,7 +182,7 @@ const Orders = ({navigation}) => {
           <Text style={styles.signedInAsStyle}>
             {COMMON_CONSTS.SIGNED_IN_AS}
           </Text>
-          <Text style={styles.nameStyle}>{COMMON_CONSTS.MARK_TAPPERT}</Text>
+          <Text style={styles.nameStyle}>{name}</Text>
           <TouchableOpacity
             style={styles.buttonStyle}
             onPress={() => handleSignOutButtonPress()}>

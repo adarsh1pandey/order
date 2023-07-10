@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
   },
   footerView: {
     marginTop: hp(4),
+    paddingBottom: 0,
   },
   costumerServicePlatformTextStyle: {
     color: '#a5c5d2',

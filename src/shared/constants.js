@@ -22,4 +22,18 @@ export const COMMON_CONSTS = {
   CUSTOMER: 'CUSTOMER',
   ENTER_ALL_FIELDS: 'Enter all fields',
   PLATFORM: 'PLATFORM',
+  NEW: 'NEW',
+  SOMETHING_WENT_WRONG: 'Something went wrong',
 };
+
+export function objectToFormData(data) {
+  let formData = new FormData();
+  for (let key in data) {
+    if (Array.isArray(data[key])) {
+      formData.append(key, JSON.stringify(data[key]));
+    } else {
+      formData.append(key, data[key]);
+    }
+  }
+  return formData;
+}

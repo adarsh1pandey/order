@@ -8,7 +8,7 @@ import {RFValue} from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
   container: {
-    width: wp(100),
+    flex: 1,
   },
   headerView: {
     // height: hp(7),
